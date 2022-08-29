@@ -70,4 +70,33 @@ public class CategoryResource {
                     .entity(new CategoryDTO(saveCategory)).build();
         }
     }
+
+    @PUT
+    @Path("/{id}")
+    public Response update(@PathParam("id") Long id, @Valid CategoryFormDTO formDTO) {
+        Category category = categoryRepository.findById(id);
+        if(category == null) {
+            return Response
+                    .status(Response.Status.NOT_FOUND)
+                    .entity("Category id with " + id + " not found.").build();
+        }
+        category.setName(formDTO.getName());
+        category.setActive(formDTO.isActive());
+        return Response
+                .status(Response.Status.OK)
+                .entity(new CategoryDTO(category)).build();
+    }
+
+    @DELETE
+    @Path("/{id}")
+    public Response delete(@PathParam("id") Long id) {
+        Category category = categoryRepository.findById(id);
+        if(category == null) {
+            return Response
+                    .status(Response.Status.NOT_FOUND)
+                    .entity("Category with id " + id + " not found.").build();
+        }
+        categoryRepository.deleteById(id);
+        return Response.noContent().build();
+    }
 }
