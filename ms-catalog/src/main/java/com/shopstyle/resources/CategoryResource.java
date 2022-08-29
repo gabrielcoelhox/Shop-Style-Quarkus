@@ -41,7 +41,8 @@ public class CategoryResource {
         if(category == null) {
             return Response
                     .status(Response.Status.NOT_FOUND)
-                    .entity("Category with id " + id + " not found.").build();
+                    .entity("Category with id " + id + " not found.")
+                    .build();
         }
         return Response.ok(new CategoryDTO(category)).build();
     }
@@ -54,20 +55,23 @@ public class CategoryResource {
             categoryRepository.persist(category);
             return Response
                     .status(Response.Status.CREATED)
-                    .entity(new CategoryDTO(category)).build();
+                    .entity(new CategoryDTO(category))
+                    .build();
         }
         Category parentCategory = categoryRepository.findById(formDTO.getParentId());
         if(parentCategory == null) {
             return Response
                     .status(Response.Status.NOT_FOUND)
-                    .entity("ParentCategory with id: " + formDTO.getParentId() + " not found.").build();
+                    .entity("ParentCategory with id: " + formDTO.getParentId() + " not found.")
+                    .build();
         } else {
             Category saveCategory = new Category(formDTO, parentCategory);
             categoryRepository.persist(saveCategory);
             parentCategory.addChildren(saveCategory);
             return Response
                     .status(Response.Status.CREATED)
-                    .entity(new CategoryDTO(saveCategory)).build();
+                    .entity(new CategoryDTO(saveCategory))
+                    .build();
         }
     }
 
@@ -78,13 +82,15 @@ public class CategoryResource {
         if(category == null) {
             return Response
                     .status(Response.Status.NOT_FOUND)
-                    .entity("Category id with " + id + " not found.").build();
+                    .entity("Category id with " + id + " not found.")
+                    .build();
         }
         category.setName(formDTO.getName());
         category.setActive(formDTO.isActive());
         return Response
                 .status(Response.Status.OK)
-                .entity(new CategoryDTO(category)).build();
+                .entity(new CategoryDTO(category))
+                .build();
     }
 
     @DELETE
@@ -94,7 +100,8 @@ public class CategoryResource {
         if(category == null) {
             return Response
                     .status(Response.Status.NOT_FOUND)
-                    .entity("Category with id " + id + " not found.").build();
+                    .entity("Category with id " + id + " not found.")
+                    .build();
         }
         categoryRepository.deleteById(id);
         return Response.noContent().build();

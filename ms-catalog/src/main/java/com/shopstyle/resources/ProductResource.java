@@ -44,7 +44,8 @@ public class ProductResource {
         if (product == null) {
             return Response
                     .status(Response.Status.NOT_FOUND)
-                    .entity("Product with id " + id + " not found.").build();
+                    .entity("Product with id " + id + " not found.")
+                    .build();
         }
         return Response.ok(new ProductDTO(product)).build();
     }
@@ -55,18 +56,21 @@ public class ProductResource {
         if (category == null) {
             return Response
                     .status(Response.Status.NOT_FOUND)
-                    .entity("Category with id " + formDto.getCategoryId() + " not found.").build();
+                    .entity("Category with id " + formDto.getCategoryId() + " not found.")
+                    .build();
         }
         if(verifyCategory(category)) {
             Product product = new Product(formDto, category);
             productRepository.persist(product);
             return Response
                     .status(Response.Status.CREATED)
-                    .entity(new ProductDTO(product)).build();
+                    .entity(new ProductDTO(product))
+                    .build();
         } else {
             return Response
                     .status(Response.Status.BAD_REQUEST)
-                    .entity("It is not possible to add a product to this category.").build();
+                    .entity("It is not possible to add a product to this category.")
+                    .build();
         }
     }
 
@@ -77,18 +81,21 @@ public class ProductResource {
         if (category == null) {
             return Response
                     .status(Response.Status.NOT_FOUND)
-                    .entity("Category with id " + formDTO.getCategoryId() + " not found.").build();
+                    .entity("Category with id " + formDTO.getCategoryId() + " not found.")
+                    .build();
         }
         Product product = productRepository.findById(id);
         if (product == null) {
             return Response
                     .status(Response.Status.NOT_FOUND)
-                    .entity("Product with id " + formDTO.getCategoryId() + " not found.").build();
+                    .entity("Product with id " + formDTO.getCategoryId() + " not found.")
+                    .build();
         }
         if(!verifyCategory(category)) {
             return Response
                     .status(Response.Status.BAD_REQUEST)
-                    .entity("It is not possible to add a product to this category.").build();
+                    .entity("It is not possible to add a product to this category.")
+                    .build();
         } else {
             product.setName(formDTO.getName());
             product.setDescription(formDTO.getDescription());
@@ -98,7 +105,8 @@ public class ProductResource {
             product.setCategory(category);
             return Response
                     .status(Response.Status.CREATED)
-                    .entity(new ProductDTO(product)).build();
+                    .entity(new ProductDTO(product))
+                    .build();
         }
     }
 
@@ -109,7 +117,8 @@ public class ProductResource {
         if (product == null) {
             return Response
                     .status(Response.Status.NOT_FOUND)
-                    .entity("Product with id " + id + " not found.").build();
+                    .entity("Product with id " + id + " not found.")
+                    .build();
         }
         productRepository.deleteById(id);
         return Response.noContent().build();
